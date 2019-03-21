@@ -2,8 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { RouterModule, Routes } from '@angular/router';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterModule, Routes } from '@angular/router';
+import  { AngularFireModule }  from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AuthComponent } from './user/auth/auth.component';
 import { AddComponent } from './user/add/add.component';
@@ -35,7 +40,11 @@ const appRoutes: Routes = [
   imports: [
       BrowserModule,
       NgbModule,
-      RouterModule.forRoot(appRoutes)
+      RouterModule.forRoot(appRoutes),
+           AngularFireModule.initializeApp(environment.firebase),
+      AngularFireAuthModule,
+      AngularFirestoreModule
+ 
   ],
   providers: [],
   bootstrap: [AppComponent]
