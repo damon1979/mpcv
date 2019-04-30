@@ -1,0 +1,41 @@
+<section>
+  <h1>
+    Connectez-vous à votre espace mpcv.
+  </h1>
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onLogIn()">
+
+
+      <div
+	class="form-group">
+	<label
+	  for="email">
+	  Entrez votre email
+	  </label>
+	  <input
+	    id="email"
+	    class="form-control"
+	    type="text"
+	    formControlName="email" />
+      </div>
+      <div
+	class="form-group">
+	<label
+	  for="pwd">
+	  Entrez votre mot de passe
+	</label>
+	<input
+	  class="form-control"
+	  id="pwd"
+	  type="password"
+	  formControlName="password" />
+      </div>
+      <button
+	class="btn"
+	[disabled]="!loginForm.valid"
+	type="submit">
+	Connection
+      </button>
+  </form>
+</section>

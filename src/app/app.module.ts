@@ -15,15 +15,16 @@ import { AddComponent } from './user/add/add.component';
 import { UpdateComponent } from './user/update/update.component';
 import { ListComponent } from './bouteille/list/list.component';
 import { EditComponent } from './bouteille/edit/edit.component';
-
-
-
+import { UserService } from './services/user.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from './services/auth-guard.service';
 
 // déclaration des routes
 const appRoutes: Routes = [
-    {path: 'list-bouteille', component: ListComponent},
-    {path: 'bouteille-add', component: EditComponent},
-    {path: '', component: ListComponent}
+    {path: 'list-bouteille', component: ListComponent, canActivate: [AuthGuard]},
+    {path: 'bouteille-add', component: EditComponent, canActivate: [AuthGuard]},
+    {path: '', component: ListComponent, canActivate: [AuthGuard]},
+    {path: 'login', component: AuthComponent}
 ];
 @NgModule({
   declarations: [
@@ -40,13 +41,17 @@ const appRoutes: Routes = [
   imports: [
       BrowserModule,
       NgbModule,
-      RouterModule.forRoot(appRoutes),
+
            AngularFireModule.initializeApp(environment.firebase),
       AngularFireAuthModule,
-      AngularFirestoreModule
- 
+      AngularFirestoreModule,
+      ReactiveFormsModule, 
+      RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+    providers: [
+	UserService,
+	AuthGuard
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
