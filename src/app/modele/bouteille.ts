@@ -6,6 +6,7 @@ export interface Bouteille {
     couleur?: string;
     millesime?: number;
     garde?: number;
+    dateConso?: number
     source?: string;
     degustation?: boolean;
     commentaire?: string;
