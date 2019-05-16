@@ -16,6 +16,7 @@ export class BouteilleService {
     couleurFilter$: BehaviorSubject<string | null>;
     cepageFilter$: BehaviorSubject<string | null>;
     accompagnementFilter$: BehaviorSubject<string | null>;
+    degustationFilter$: BehaviorSubject<boolean>;
 
 
 
@@ -27,6 +28,7 @@ export class BouteilleService {
         this.typeFilter$ = new BehaviorSubject(null);
         this.cepageFilter$ = new BehaviorSubject(null);
         this.accompagnementFilter$ = new BehaviorSubject(null);
+        this.degustationFilter$ = new BehaviorSubject(false);
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
 
@@ -36,15 +38,17 @@ export class BouteilleService {
                     this.accompagnementFilter$,
                     this.cepageFilter$,
                     this.couleurFilter$,
-                    this.typeFilter$
+                    this.typeFilter$,
+                    this.degustationFilter$
                 ).pipe(
                     switchMap((
                         [
                             appellation,
                             accompagnement,
-                            ceppage,
+                            cepage,
                             couleur,
-                            type
+                            type,
+                            degustation
                         ]
                     ) =>
                         afs.collection<Bouteille>('bouteilles', (ref) => {
@@ -56,8 +60,8 @@ export class BouteilleService {
                             if (accompagnement) {
                                 query = query.where('accompagnements', 'array-contains', accompagnement);
                             }
-                            if (ceppage) {
-                                query = query.where('ceppages', 'array-contains', ceppage);
+                            if (cepage) {
+                                query = query.where('cepages', 'array-contains', cepage);
                             }
                             if (couleur) {
                                 query = query.where('couleur', '==', couleur)
@@ -65,6 +69,7 @@ export class BouteilleService {
                             if (type) {
                                 query = query.where('type', '==', type);
                             }
+                            query = query.where('degustation', '==', degustation)
                             return query;
                         }
                         ).valueChanges()
