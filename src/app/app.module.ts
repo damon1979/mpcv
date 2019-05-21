@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { RouterModule, Routes } from '@angular/router';
-import  { AngularFireModule }  from '@angular/fire';
+import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -18,40 +18,52 @@ import { EditComponent } from './bouteille/edit/edit.component';
 import { UserService } from './services/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './services/auth-guard.service';
+import { CommentairedegustationComponent } from './commentairedegustation/commentairedegustation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 // déclaration des routes
 const appRoutes: Routes = [
-    {path: 'list-bouteille', component: ListComponent, canActivate: [AuthGuard]},
-    {path: 'bouteille-add', component: EditComponent, canActivate: [AuthGuard]},
-    {path: '', component: ListComponent, canActivate: [AuthGuard]},
-    {path: 'login', component: AuthComponent}
+    { path: 'list-bouteille', component: ListComponent, canActivate: [AuthGuard] },
+    { path: 'bouteille-add', component: EditComponent, canActivate: [AuthGuard] },
+    { path: '', component: ListComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: AuthComponent }
 ];
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavigationComponent,
-    AuthComponent,
-    AddComponent,
-    UpdateComponent,
-    ListComponent,
-    EditComponent,
+    declarations: [
+        AppComponent,
+        NavigationComponent,
+        AuthComponent,
+        AddComponent,
+        UpdateComponent,
+        ListComponent,
+        EditComponent,
+        CommentairedegustationComponent,
 
 
-  ],
-  imports: [
-      BrowserModule,
-      NgbModule,
-
-           AngularFireModule.initializeApp(environment.firebase),
-      AngularFireAuthModule,
-      AngularFirestoreModule,
-      ReactiveFormsModule, 
-      RouterModule.forRoot(appRoutes)
-  ],
-    providers: [
-	UserService,
-	AuthGuard
     ],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+
+
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        AngularFirestoreModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot(appRoutes),
+        BrowserAnimationsModule,
+        MatTabsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule
+    ],
+    providers: [
+        UserService,
+        AuthGuard
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,37 +5,32 @@
   <form
     [formGroup]="loginForm"
     (ngSubmit)="onLogIn()">
+    <mat-form-field>
+      <mat-label>
 
-
-      <div
-	class="form-group">
-	<label
-	  for="email">
-	  Entrez votre email
-	  </label>
-	  <input
-	    id="email"
-	    class="form-control"
-	    type="text"
-	    formControlName="email" />
-      </div>
-      <div
-	class="form-group">
-	<label
-	  for="pwd">
-	  Entrez votre mot de passe
-	</label>
-	<input
-	  class="form-control"
-	  id="pwd"
-	  type="password"
-	  formControlName="password" />
-      </div>
-      <button
-	class="btn"
-	[disabled]="!loginForm.valid"
-	type="submit">
-	Connection
-      </button>
+	Entrez votre email
+      </mat-label>
+      <input
+	id="email"
+	matInput
+	type="text"
+	formControlName="email" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+	Entrez votre mot de passe
+      </mat-label>
+      <input
+	matInput
+	id="pwd"
+	type="password"
+	formControlName="password" />
+    </mat-form-field>
+    <button
+      mat-button
+      [disabled]="!loginForm.valid"
+      type="submit">
+      Connection
+    </button>
   </form>
 </section>

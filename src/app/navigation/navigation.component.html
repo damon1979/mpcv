@@ -1,21 +1,12 @@
-<nav class="navbar navbar-expand-md bg-info" *ngIf="us.isAuth">
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" routerLink="login">
-					   Aurevoir
-					   </a>
-</li>      
-    <li class="nav-item">
-      <a class="nav-link" routerLink="list-bouteille">
-	Liste de mes bouteilles
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="bouteille-add">
-	Ajouter une bouteille
-      </a>
-    </li>
-    
-  </ul>
+<nav mat-tab-nav-bar *ngIf="us.isAuth">
+  <a mat-tab-link routerLink="login">
+    Aurevoir
+  </a>
+  <a mat-tab-link routerLink="list-bouteille">
+    Liste de mes bouteilles
+  </a>
+  <a mat-tab-link routerLink="bouteille-add">
+    Ajouter une bouteille
+  </a>
 </nav>
 
