@@ -18,6 +18,7 @@ import { EditComponent } from './bouteille/edit/edit.component';
 import { UserService } from './services/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './services/auth-guard.service';
+import { CookieService } from 'ngx-cookie-service';
 import { CommentairedegustationComponent } from './commentairedegustation/commentairedegustation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -62,7 +63,8 @@ const appRoutes: Routes = [
     ],
     providers: [
         UserService,
-        AuthGuard
+        AuthGuard,
+        CookieService
     ],
     bootstrap: [AppComponent]
 })
