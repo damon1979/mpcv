@@ -17,6 +17,7 @@ export class BouteilleService {
     cepageFilter$: BehaviorSubject<string | null>;
     accompagnementFilter$: BehaviorSubject<string | null>;
     degustationFilter$: BehaviorSubject<boolean>;
+    domaineFilter$: BehaviorSubject<string | null>;
 
 
 
@@ -29,6 +30,7 @@ export class BouteilleService {
         this.cepageFilter$ = new BehaviorSubject(null);
         this.accompagnementFilter$ = new BehaviorSubject(null);
         this.degustationFilter$ = new BehaviorSubject(false);
+        this.domaineFilter$ = new BehaviorSubject(null);
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
 
@@ -39,7 +41,8 @@ export class BouteilleService {
                     this.cepageFilter$,
                     this.couleurFilter$,
                     this.typeFilter$,
-                    this.degustationFilter$
+                    this.degustationFilter$,
+                    this.domaineFilter$
                 ).pipe(
                     switchMap((
                         [
@@ -48,7 +51,8 @@ export class BouteilleService {
                             cepage,
                             couleur,
                             type,
-                            degustation
+                            degustation,
+                            domaine
                         ]
                     ) =>
                         afs.collection<Bouteille>('bouteilles', (ref) => {
@@ -69,7 +73,10 @@ export class BouteilleService {
                             if (type) {
                                 query = query.where('type', '==', type);
                             }
-                            query = query.where('degustation', '==', degustation)
+                            query = query.where('degustation', '==', degustation);
+                            if (domaine) {
+                                query = query.where('domaine', '==', domaine);
+                            }
                             return query;
                         }
                         ).valueChanges()

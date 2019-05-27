@@ -13,4 +13,5 @@ export interface Bouteille {
     ceppages?: string[];
     accompagnements?: string[];
     owner?: string;
+    domaine?: string;
 }
