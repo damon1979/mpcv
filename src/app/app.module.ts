@@ -17,7 +17,7 @@ import { ListComponent } from './bouteille/list/list.component';
 import { EditComponent } from './bouteille/edit/edit.component';
 import { UserService } from './services/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthGuard } from './services/auth-guard.service';
+
 import { CookieService } from 'ngx-cookie-service';
 import { CommentairedegustationComponent } from './commentairedegustation/commentairedegustation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +25,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { AuthGuard } from './services/authguard.service';
 // déclaration des routes
 const appRoutes: Routes = [
     { path: 'list-bouteille', component: ListComponent, canActivate: [AuthGuard] },
@@ -59,7 +60,9 @@ const appRoutes: Routes = [
         MatTabsModule,
         MatFormFieldModule,
         MatInputModule,
-        MatButtonModule
+        MatButtonModule,
+        MatProgressBarModule
+
     ],
     providers: [
         UserService,
