@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action, AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentSnapshot } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Bouteille } from '../modele/bouteille';
 import { UserService } from './user.service';
 @Injectable({
@@ -101,13 +101,26 @@ export class BouteilleService {
         }
         else {
             bouteille.owner = this.us.user.uid;
+            bouteille.degustation = false;
             id = this.afs.createId();
             return this.bouteilleCollection.doc(id).set(bouteille);
         }
 
     }
-    getSingle(id: string): Observable<Action<DocumentSnapshot<Bouteille>>> {
-        return this.initBouteilleDoc(id).snapshotChanges();
+    getSingle(id: string): Observable<Action<DocumentSnapshot<Bouteille>> | null> {
+        return this.initBouteilleDoc(id).snapshotChanges().pipe(
+            map((docChange) => {
+                if (!docChange.payload.exists) {
+                    return null;
+                }
+                if (docChange.payload.data().owner == this.us.user.uid) {
+                    return docChange;
+                }
+                else {
+                    return null;
+                }
+            })
+        );
     }
     remove(id: string) {
 
