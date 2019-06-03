@@ -10,7 +10,7 @@ export interface Bouteille {
     source?: string;
     degustation?: boolean;
     commentaire?: string;
-    ceppages?: string[];
+    cepages?: string[];
     accompagnements?: string[];
     owner?: string;
     domaine?: string;
