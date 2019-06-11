@@ -1,0 +1,124 @@
+<h1>
+  {{ edition }} d'une bouteille
+</h1>
+<form [formGroup]="editBouteilleForm" (ngSubmit)="onEdit()">
+  <mat-form-field>
+    <input type="text" matInput placeholder="Emplacement" formControlName="emplacement" />
+    <mat-hint>
+      à entrer sous la forme d'une cellule Excel
+    </mat-hint>
+    <mat-error *ngIf="editBouteilleForm.controls.emplacement.hasError('pattern')">
+      Format de saisie invalide
+    </mat-error>
+    <mat-error *ngIf="editBouteilleForm.controls.emplacement.hasError('required')">
+      Ce champ est obligatoir
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="Appellation" formControlName="appellation" />
+    <mat-error *ngIf="editBouteilleForm.controls.appellation.hasError('required')">
+      Ce champ est obligatoir
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+      Type
+    </mat-label>
+    <mat-select formControlName="type">
+      <mat-option value="Doux">
+	Doux
+      </mat-option>
+      <mat-option value="Mousseux">
+	Mousseux
+      </mat-option>
+      <mat-option value="Sec">
+	Sec
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+      Couleur
+    </mat-label>
+    <mat-select formControlName="couleur">
+      <mat-option value="Rouge">
+	Rouge
+      </mat-option>
+      <mat-option value="Blanc">
+	Blanc
+      </mat-option>
+      <mat-option value="Rosé">
+	Rosé
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" placeholder="Millésime" formControlName="millesime" />
+    <mat-error *ngIf="editBouteilleForm.controls.millesime.hasError('required')">
+      Ce champ est obligatoire
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" formControlName="garde" placeholder="Tempes de garde" />
+    <mat-error *ngIf="editBouteilleForm.controls.garde.hasError('min')">
+      Le temps de garde doit être d'au moins une année
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+      Source de la bouteille
+    </mat-label>
+    <mat-select>
+      <mat-option value="Cadeau">
+	Cadeau
+      </mat-option>
+      <mat-option value="Achat">
+	Achat
+      </mat-option>
+      <mat-option value="Autre">
+	Autre
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+      Commentaire
+    </mat-label>
+    <textarea formControlName="commentaire" matInput cdkTextAreaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10">
+    </textarea>
+  </mat-form-field>
+  <div formArrayName="cepages">
+    <mat-form-field *ngFor="let cepage of getArray('cepages').controls; let i = index">
+      <button mat-button matPrefix type="button" (click)="onDelElement('cepages', i)">
+	Suprimez ce champs
+      </button>
+	<input matInput type="text" [formControlName]="i" placeholder="entrez le nom d'un cépage" />
+	<mat-error *ngIf="cepage.hasError('required')">
+	  Suprimez le champ si vous ne souhaitez pas le remplir.
+	</mat-error>
+      </mat-form-field>
+    <button mat-button type="button" (click)="onAddElement('cepages')">
+      Ajoutez un cépage
+    </button>
+  </div>
+  <div formArrayName="accompagnements">
+    <mat-form-field *ngFor="let acc of getArray('accompagnements').controls; let i = index">
+      <button mat-button matPrefix type="button" (click)="onDelElement('accompagnements', i)">
+	Suprimez cet accompagnement
+      </button>
+	<input matInput [formControlName]="i" type="text" placeholder="Entrez un accompagnement" />
+	<mat-error *ngIf="acc.hasError('required')">
+	  Suprimez ce champs si vous ne souhaitez pas le remplir
+	</mat-error>
+      </mat-form-field>
+    <button mat-button type="button" (click)="onAddElement('accompagnements')">
+      Ajoutez un accompagnement
+    </button>
+  </div>
+  <mat-form-field>
+    <input matInput type="text" formControlName="domaine" />
+  </mat-form-field>
+  <button mat-button type="submit" [disabled]="editBouteilleForm.invalid">
+    Enregistrez
+  </button>
+</form>

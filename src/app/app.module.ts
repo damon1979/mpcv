@@ -26,10 +26,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSelectModule } from '@angular/material/select';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { AuthGuard } from './services/authguard.service';
 // déclaration des routes
 const appRoutes: Routes = [
-    { path: 'list-bouteille', component: ListComponent, canActivate: [AuthGuard] },
+
     { path: 'bouteille-add', component: EditComponent, canActivate: [AuthGuard] },
     { path: '', component: ListComponent, canActivate: [AuthGuard] },
     { path: 'login', component: AuthComponent }
@@ -61,7 +64,10 @@ const appRoutes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatGridListModule,
+        MatSelectModule,
+        TextFieldModule
 
     ],
     providers: [

@@ -94,6 +94,7 @@ export class BouteilleService {
     }
 
     persist(bouteille: Bouteille) {
+        bouteille.dateConso = bouteille.millesime + bouteille.garde;
         var id: string;
         if (bouteille.id) {
             id = bouteille.id;
@@ -103,6 +104,7 @@ export class BouteilleService {
             bouteille.owner = this.us.user.uid;
             bouteille.degustation = false;
             id = this.afs.createId();
+            bouteille.id = id;
             return this.bouteilleCollection.doc(id).set(bouteille);
         }
 
