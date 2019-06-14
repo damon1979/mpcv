@@ -1,7 +1,7 @@
 <h1>
   {{ edition }} d'une bouteille
 </h1>
-<form [formGroup]="editBouteilleForm" (ngSubmit)="onEdit()">
+<form *ngIf="ready" [formGroup]="editBouteilleForm" (ngSubmit)="onEdit()">
   <mat-form-field>
     <input type="text" matInput placeholder="Emplacement" formControlName="emplacement" />
     <mat-hint>
@@ -57,6 +57,9 @@
     <mat-error *ngIf="editBouteilleForm.controls.millesime.hasError('required')">
       Ce champ est obligatoire
     </mat-error>
+    <mat-error *ngIf="editBouteilleForm.controls.millesime.hasError('max')">
+      Vous ne pouvez pas entrer une année située dans le futur !
+      </mat-error>
   </mat-form-field>
   <mat-form-field>
     <input matInput type="number" formControlName="garde" placeholder="Tempes de garde" />
@@ -116,7 +119,7 @@
     </button>
   </div>
   <mat-form-field>
-    <input matInput type="text" formControlName="domaine" />
+    <input matInput type="text" formControlName="domaine" placeholder="Domaine" />
   </mat-form-field>
   <button mat-button type="submit" [disabled]="editBouteilleForm.invalid">
     Enregistrez

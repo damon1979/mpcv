@@ -13,6 +13,7 @@ import { docChanges } from '@angular/fire/firestore';
     styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit, OnDestroy {
+    ready: boolean;
     edition: string;
     bouteille: Bouteille;
     editBouteilleForm: FormGroup;
@@ -22,6 +23,7 @@ export class EditComponent implements OnInit, OnDestroy {
     constructor(private fb: FormBuilder, private router: Router, private bs: BouteilleService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.ready = false;
         this.bouteille = {};
         if (this.route.snapshot.params['id']) {
             this.edition = 'Mise à jour';
@@ -30,6 +32,9 @@ export class EditComponent implements OnInit, OnDestroy {
             this.docChangeSubscription = this.bs.getSingle(id).subscribe((docChanges) => {
                 if (docChanges) {
                     this.bouteille = docChanges.payload.data();
+                    this.initForm();
+                    this.ready = true;
+                    console.log(this.bouteille.emplacement)
                 }
                 else {
                     console.log('Pas de bouteille.')
@@ -38,9 +43,11 @@ export class EditComponent implements OnInit, OnDestroy {
         }
         else {
             this.edition = 'Ajout';
+            this.initForm();
+            this.ready = true;
         }
 
-        this.initForm();
+
     }
     ngOnDestroy() {
         if (this.docChangeSubscription) {
