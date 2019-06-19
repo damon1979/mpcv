@@ -9,6 +9,7 @@ import { UserService } from './user.service';
     providedIn: 'root'
 })
 export class BouteilleService {
+    mettreAJour: BehaviorSubject<Bouteille | null>;
     bouteilleCollection: AngularFirestoreCollection<Bouteille>;
     bouteilles$: Observable<Bouteille[]>;
     appellationFilter$: BehaviorSubject<string | null>;
@@ -22,6 +23,7 @@ export class BouteilleService {
 
 
     constructor(private us: UserService, private afs: AngularFirestore) {
+        this.mettreAJour = new BehaviorSubject(null);
         this.bouteilleCollection = this.afs.collection<Bouteille>('bouteilles');
 
         this.appellationFilter$ = new BehaviorSubject(null);

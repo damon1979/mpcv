@@ -17,7 +17,7 @@ import { ListComponent } from './bouteille/list/list.component';
 import { EditComponent } from './bouteille/edit/edit.component';
 import { UserService } from './services/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { Unique } from './services/validators/unique.service';
 import { CookieService } from 'ngx-cookie-service';
 import { CommentairedegustationComponent } from './commentairedegustation/commentairedegustation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -82,7 +82,8 @@ const appRoutes: Routes = [
     providers: [
         UserService,
         AuthGuard,
-        CookieService
+        CookieService,
+        Unique
     ],
     bootstrap: [AppComponent]
 })

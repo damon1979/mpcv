@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BouteilleService } from 'src/app/services/bouteille.service';
 import { Subscription } from 'rxjs';
 import { docChanges } from '@angular/fire/firestore';
+import { Unique } from 'src/app/services/validators/unique.service';
 
 
 @Component({
@@ -32,17 +33,19 @@ export class EditComponent implements OnInit, OnDestroy {
             this.docChangeSubscription = this.bs.getSingle(id).subscribe((docChanges) => {
                 if (docChanges) {
                     this.bouteille = docChanges.payload.data();
+                    this.bs.mettreAJour.next(this.bouteille)
                     this.initForm();
                     this.ready = true;
-                    console.log(this.bouteille.emplacement)
                 }
                 else {
+                    this.bs.mettreAJour.next(null);
                     console.log('Pas de bouteille.')
                 }
             });
         }
         else {
             this.edition = 'Ajout';
+            this.bs.mettreAJour.next(null);
             this.initForm();
             this.ready = true;
         }
@@ -59,7 +62,10 @@ export class EditComponent implements OnInit, OnDestroy {
         this.editBouteilleForm = this.fb.group({
             emplacement: [
                 this.bouteille.emplacement ? this.bouteille.emplacement : '', [
-                    Validators.required, Validators.pattern(/^[A-Z]*[1-9]*0*$/)
+                    Validators.required, Validators.pattern(/^[A-Z]+[1-9]+[0-9]*$/)
+                ],
+                [
+                    Unique.create(this.bs)
                 ]
             ],
             appellation: [
