@@ -5,6 +5,7 @@ import { BouteilleService } from '../../services/bouteille.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CommentairedegustationComponent } from 'src/app/commentairedegustation/commentairedegustation.component';
+import { ConfirmComponent } from 'src/app/confirm/confirm.component';
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
@@ -37,6 +38,14 @@ export class ListComponent implements OnInit, OnDestroy {
                 // à implémenter
             }
         );
+    }
+    delete(bouteille: Bouteille) {
+        const dialogRef = this.dialog.open(ConfirmComponent, { data: bouteille, width: '250px' })
+        dialogRef.afterClosed().subscribe(data => {
+            if (data) {
+                this.bs.remove(data.id);
+            }
+        });
     }
     toggleDegust(bouteille: Bouteille) {
         if (bouteille.degustation) {

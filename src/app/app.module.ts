@@ -34,6 +34,7 @@ import { AuthGuard } from './services/authguard.service';
 import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import { ConfirmComponent } from './confirm/confirm.component';
 // déclaration des routes
 const appRoutes: Routes = [
 
@@ -55,7 +56,8 @@ const appRoutes: Routes = [
         UpdateComponent,
         ListComponent,
         EditComponent,
-        CommentairedegustationComponent
+        CommentairedegustationComponent,
+        ConfirmComponent
     ],
     imports: [
         BrowserModule,
@@ -82,7 +84,8 @@ const appRoutes: Routes = [
 
     ],
     entryComponents: [
-        CommentairedegustationComponent
+        CommentairedegustationComponent,
+        ConfirmComponent
     ],
     providers: [
         UserService,

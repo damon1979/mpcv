@@ -117,7 +117,10 @@
 	  </button>
 	  <button mat-list-item (click)="toggleDegust(bouteille)">
 	    {{ getDegustationState(bouteille) }}
-	    </button>
+	  </button>
+	  <button mat-list-item (click)="delete(bouteille)">
+	    Suprimer
+	  </button>
 	</mat-action-list>
       </td>
     </ng-container>
