@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { Bouteille } from '../../modele/bouteille';
 import { BouteilleService } from '../../services/bouteille.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CommentairedegustationComponent } from 'src/app/commentairedegustation/commentairedegustation.component';
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
@@ -25,7 +27,7 @@ export class ListComponent implements OnInit, OnDestroy {
         'id'
     ];
     bouteilleSubscription: Subscription;
-    constructor(private bs: BouteilleService, private router: Router) { }
+    constructor(private bs: BouteilleService, private router: Router, private dialog: MatDialog) { }
     goForUpdate(id: string) {
         this.router.navigate(['bouteille-add/' + id])
     }
@@ -36,20 +38,39 @@ export class ListComponent implements OnInit, OnDestroy {
             }
         );
     }
-    togleDegust(bouteille: Bouteille) {
+    toggleDegust(bouteille: Bouteille) {
         if (bouteille.degustation) {
             bouteille.degustation = false;
+            bouteille.emplacement = '';
             this.save(bouteille);
         }
         else {
-            bouteille.degustation = true;
+
+            // ouverture de la modale permettant de saisir un commentaire de dégustation.
+            this.openDialog(bouteille);
         }
     }
     save(bouteille: Bouteille) {
         this.bs.persist(bouteille)
+            .then(() => {
+                if (bouteille.emplacement == '') {
+                    this.router.navigate(['add-bouteille/' + bouteille.id])
+                }
+            })
             .catch((e) => {
                 // ouverture de la boîte de dialogue d'erreur
             });
+    }
+    openDialog(bouteille: Bouteille) {
+        const dialogRef = this.dialog.open(CommentairedegustationComponent, { data: bouteille, width: '250px' })
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                bouteille = result;
+                bouteille.degustation = true;
+                this.save(bouteille);
+
+            }
+        });
     }
     getDegustationState(bouteille: Bouteille): string {
         if (bouteille.degustation) {

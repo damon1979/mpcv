@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>
+  Entrez un commentaire de dégustation !
+</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <textarea matInput [(ngModel)]="data.feedback" placeholder="Votre commentaire"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data">
+    Ouvrir cette bouteille
+  </button>
+  <button mat-button (click)="cancel()">
+    Garder cette bouteille en cave
+    </button>
+  </div>
+  

@@ -32,6 +32,8 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatTableModule } from '@angular/material/table';
 import { AuthGuard } from './services/authguard.service';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 // déclaration des routes
 const appRoutes: Routes = [
 
@@ -53,9 +55,7 @@ const appRoutes: Routes = [
         UpdateComponent,
         ListComponent,
         EditComponent,
-        CommentairedegustationComponent,
-
-
+        CommentairedegustationComponent
     ],
     imports: [
         BrowserModule,
@@ -76,8 +76,13 @@ const appRoutes: Routes = [
         MatSelectModule,
         TextFieldModule,
         MatTableModule,
-        MatListModule
+        MatListModule,
+        MatDialogModule,
+        FormsModule
 
+    ],
+    entryComponents: [
+        CommentairedegustationComponent
     ],
     providers: [
         UserService,

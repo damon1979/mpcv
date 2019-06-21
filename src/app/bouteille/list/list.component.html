@@ -115,6 +115,9 @@
 	  <button mat-list-item (click)="goForUpdate(bouteille.id)">
 	    Modifier
 	  </button>
+	  <button mat-list-item (click)="toggleDegust(bouteille)">
+	    {{ getDegustationState(bouteille) }}
+	    </button>
 	</mat-action-list>
       </td>
     </ng-container>
