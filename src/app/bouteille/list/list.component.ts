@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 import { Bouteille } from '../../modele/bouteille';
 import { BouteilleService } from '../../services/bouteille.service';
 import { Router } from '@angular/router';
@@ -28,7 +29,7 @@ export class ListComponent implements OnInit, OnDestroy {
         'id'
     ];
     bouteilleSubscription: Subscription;
-    constructor(private bs: BouteilleService, private router: Router, private dialog: MatDialog) { }
+    constructor(private bs: BouteilleService, private router: Router, private dialog: MatDialog, private cs: CookieService) { }
     goForUpdate(id: string) {
         this.router.navigate(['bouteille-add/' + id])
     }
@@ -92,5 +93,25 @@ export class ListComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.bouteilleSubscription.unsubscribe();
     }
-
+    appellationFiltre(input: string) {
+        this.bs.appellationFilter$.next(input);
+    }
+    accompagnementFiltre(input: string) {
+        this.bs.accompagnementFilter$.next(input);
+    }
+    couleurFiltre(input: string) {
+        this.bs.couleurFilter$.next(input);
+    }
+    cepageFiltre(input: string) {
+        this.bs.cepageFilter$.next(input);
+    }
+    typeFiltre(input) {
+        this.bs.typeFilter$.next(input);
+    }
+    degustationFiltre(input: boolean) {
+        this.bs.degustationFilter$.next(input);
+    }
+    domaineFiltre(input: string) {
+        this.bs.domaineFilter$.next(input);
+    }
 }
