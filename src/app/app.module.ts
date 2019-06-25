@@ -2,8 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-
-
 import { RouterModule, Routes } from '@angular/router';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -11,8 +9,8 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AuthComponent } from './user/auth/auth.component';
-import { AddComponent } from './user/add/add.component';
-import { UpdateComponent } from './user/update/update.component';
+
+
 import { ListComponent } from './bouteille/list/list.component';
 import { EditComponent } from './bouteille/edit/edit.component';
 import { UserService } from './services/user.service';
@@ -52,8 +50,6 @@ const appRoutes: Routes = [
         AppComponent,
         NavigationComponent,
         AuthComponent,
-        AddComponent,
-        UpdateComponent,
         ListComponent,
         EditComponent,
         CommentairedegustationComponent,
