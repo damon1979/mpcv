@@ -1,7 +1,7 @@
 <h1>
   Liste de vos bouteilles
 </h1>
-<table mat-table [dataSource]="bs.bouteilles$">
+<table cdkTrapFocus mat-table [dataSource]="bs.bouteilles$">
   <ng-container matColumnDef="emplacement">
     <th mat-header-cell *matHeaderCellDef>
       Emplacement
@@ -11,27 +11,39 @@
     </td>
   </ng-container>
   <ng-container matColumnDef="couleur">
-    <th mat-header-cell *matHeaderCellDef (click)="couleurFiltre(null)">
-      Couleur
+    <th mat-header-cell *matHeaderCellDef>
+      <button [disabled]="!bs.couleurFilter$.getValue()" mat-button (click)="couleurFiltre(null)">
+	Couleur
+	</button>
     </th>
-    <td mat-cell *matCellDef="let bouteille" (click)="couleurFiltre(bouteille.couleur)">
-      {{ bouteille.couleur }}
+    <td mat-cell *matCellDef="let bouteille">
+      <button [disabled]="bs.couleurFilter$.getValue()" mat-button (click)="couleurFiltre(bouteille.couleur)">
+	{{ bouteille.couleur }}
+      </button>
     </td>
   </ng-container>
   <ng-container matColumnDef="appellation">
-    <th mat-header-cell *matHeaderCellDef (click)="appellationFiltre(nul)">
-      Appellation
+    <th mat-header-cell *matHeaderCellDef>
+      <button [disabled]="!bs.appellationFilter$.getValue()" mat-button (click)="appellationFiltre(null)">
+	Appellation
+	</button>
     </th>
-    <td mat-cell *matCellDef="let bouteille" (click)="appellationFiltre(bouteille.appellation)">
-      {{ bouteille.appellation }}
+    <td mat-cell *matCellDef="let bouteille">
+      <button [disabled]="bs.appellationFilter$.getValue()" mat-button (click)="appellationFiltre(bouteille.appellation)">
+	{{ bouteille.appellation }}
+      </button>
     </td>
   </ng-container>
   <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef (click)="typeFiltre(null)">
-      Type
+    <th mat-header-cell *matHeaderCellDef>
+      <button [disabled]="!bs.typeFilter$.getValue()" mat-button (click)="typeFiltre(null)">
+	Type
+      </button>
     </th>
-    <td mat-cell *matCellDef="let bouteille" (click)="typeFiltre(bouteille.type)">
-      {{ bouteille.type }}
+    <td mat-cell *matCellDef="let bouteille">
+      <button [disabled]="bs.typeFilter$.getValue()" mat-button (click)="typeFiltre(bouteille.type)">
+	{{ bouteille.type }}
+	</button>
       </td>
   </ng-container>
   <ng-container matColumnDef="millesime">
@@ -43,11 +55,15 @@
     </td>
   </ng-container>
   <ng-container matColumnDef="domaine">
-    <th mat-header-cell *matHeaderCellDef (click)="domaineFiltre(null)">
-      Domaine
+    <th mat-header-cell *matHeaderCellDef>
+      <button [disabled]="!bs.domaineFilter$.getValue()" (click)="domaineFiltre(null)">
+	Domaine
+	</button>
     </th>
-    <td mat-cell *matCellDef="let bouteille" (click)="domaineFilter(bouteille.domaine)">
-      {{ bouteille.domaine }}
+    <td mat-cell *matCellDef="let bouteille">
+      <button [disabled]="bs.domaineFilter$.getValue()" mat-button (click)="domaineFiltre(bouteille.domaine)">
+	{{ bouteille.domaine }}
+	</button>
     </td>
   </ng-container>
   <ng-container matColumnDef="garde">
@@ -67,27 +83,31 @@
       </td>
   </ng-container>
   <ng-container matColumnDef="cepages">
-    <th mat-header-cell *matHeaderCellDef (click)="cepageFiltre(null)">
-      Cépages
+    <th mat-header-cell *matHeaderCellDef>
+      <button [disabled]="!bs.cepageFilter$.getValue() || bs.accompagnementFilter$.getValue()" mat-button (click)="cepageFiltre(null)">
+	Cépages
+	</button>
     </th>
     <td mat-cell *matCellDef="let bouteille">
-      <mat-list>
-	<mat-list-item *ngFor="let cepage of bouteille.cepages" (click)="cepageFiltre(cepage)">
+      <mat-action-list>
+	<button mat-list-item *ngFor="let cepage of bouteille.cepages" (click)="cepageFiltre(cepage)" [disabled]="(bs.cepageFilter$.getValue() && bs.cepageFilter$.getValue() == cepage) || bs.accompagnementFilter$.getValue()">
 	  {{ cepage }}
-	</mat-list-item>
-      </mat-list>
+</button>
+      </mat-action-list>
     </td>
   </ng-container>
   <ng-container matColumnDef="accompagnements">
-    <th mat-header-cell *matHeaderCellDef (click)="accompagnementFiltre(null)">
-      Accompagnements
+    <th mat-header-cell *matHeaderCellDef>
+      <button mat-button (click)="accompagnementFiltre(null)" [disabled]="!bs.accompagnementFilter$.getValue() || bs.cepageFilter$.getValue()">
+	Accompagnements
+	</button>
     </th>
     <td mat-cell *matCellDef="let bouteille">
-      <mat-list>
-	<mat-list-item *ngFor="let accompagnement of bouteille.accompagnements" (click)="accompagnementFiltre(accompagnement)">
+      <mat-action-list>
+	<button  mat-list-item *ngFor="let accompagnement of bouteille.accompagnements" (click)="accompagnementFiltre(accompagnement)" [disabled]="(bs.accompagnementFilter$.getValue() && bs.accompagnementFilter$.getValue() == accompagnement) || bs.cepageFilter$.getValue()">
 	  {{ accompagnement }}
-	</mat-list-item>
-      </mat-list>
+	</button>
+      </mat-action-list>
       </td>
   </ng-container>
   <ng-container matColumnDef="source">
