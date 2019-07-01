@@ -1,6 +1,14 @@
 <h1>
   Liste de vos bouteilles
 </h1>
+<mat-radio-group aria-label="Filtrez" (change)="degustationFiltre($event.value)">
+  <mat-radio-button value="En cave">
+    En cave
+  </mat-radio-button>
+  <mat-radio-button value="En dégustation">
+    En dégustation
+  </mat-radio-button>
+</mat-radio-group>
 <table cdkTrapFocus mat-table [dataSource]="bs.bouteilles$">
   <ng-container matColumnDef="emplacement">
     <th mat-header-cell *matHeaderCellDef>
@@ -14,7 +22,7 @@
     <th mat-header-cell *matHeaderCellDef>
       <button [disabled]="!bs.couleurFilter$.getValue()" mat-button (click)="couleurFiltre(null)">
 	Couleur
-	</button>
+      </button>
     </th>
     <td mat-cell *matCellDef="let bouteille">
       <button [disabled]="bs.couleurFilter$.getValue()" mat-button (click)="couleurFiltre(bouteille.couleur)">
@@ -26,7 +34,7 @@
     <th mat-header-cell *matHeaderCellDef>
       <button [disabled]="!bs.appellationFilter$.getValue()" mat-button (click)="appellationFiltre(null)">
 	Appellation
-	</button>
+      </button>
     </th>
     <td mat-cell *matCellDef="let bouteille">
       <button [disabled]="bs.appellationFilter$.getValue()" mat-button (click)="appellationFiltre(bouteille.appellation)">
@@ -43,27 +51,31 @@
     <td mat-cell *matCellDef="let bouteille">
       <button [disabled]="bs.typeFilter$.getValue()" mat-button (click)="typeFiltre(bouteille.type)">
 	{{ bouteille.type }}
-	</button>
-      </td>
+      </button>
+    </td>
   </ng-container>
   <ng-container matColumnDef="millesime">
     <th mat-header-cell *matHeaderCellDef>
-      Millésime
+      <button mat-button [disabled]="!bs.millesimeFilter$.getValue()" (click)="millesimeFiltre(null)">
+	Millésime
+      </button>
     </th>
     <td mat-cell *matCellDef="let bouteille">
-      {{ bouteille.millesime }}
+      <button mat-button [disabled]="bs.millesimeFilter$.getValue()" (click)="millesimeFiltre(bouteille.millesime)">
+	{{ bouteille.millesime }}
+      </button>
     </td>
   </ng-container>
   <ng-container matColumnDef="domaine">
     <th mat-header-cell *matHeaderCellDef>
       <button [disabled]="!bs.domaineFilter$.getValue()" (click)="domaineFiltre(null)">
 	Domaine
-	</button>
+      </button>
     </th>
     <td mat-cell *matCellDef="let bouteille">
       <button [disabled]="bs.domaineFilter$.getValue()" mat-button (click)="domaineFiltre(bouteille.domaine)">
 	{{ bouteille.domaine }}
-	</button>
+      </button>
     </td>
   </ng-container>
   <ng-container matColumnDef="garde">
@@ -72,27 +84,31 @@
     </th>
     <td mat-cell *matCellDef="let bouteille">
       {{ bouteille.garde }} an(s)
-      </td>
+    </td>
   </ng-container>
   <ng-container matColumnDef="dateConso">
     <th mat-header-cell *matHeaderCellDef>
-      Année de consomation précaunisée
+      <button mat-button [disabled]="!bs.dateFilter$.getValue()" (click)="dateFiltre(null)">
+	Année de consomation précaunisée
+      </button>
     </th>
     <td mat-cell *matCellDef="let bouteille">
-      {{ bouteille.dateConso }}
-      </td>
+      <button mat-button [disabled]="bs.dateFilter$.getValue()" (click)="dateFiltre(bouteille.dateConso)">
+	{{ bouteille.dateConso }}
+      </button>
+    </td>
   </ng-container>
   <ng-container matColumnDef="cepages">
     <th mat-header-cell *matHeaderCellDef>
       <button [disabled]="!bs.cepageFilter$.getValue() || bs.accompagnementFilter$.getValue()" mat-button (click)="cepageFiltre(null)">
 	Cépages
-	</button>
+      </button>
     </th>
     <td mat-cell *matCellDef="let bouteille">
       <mat-action-list>
 	<button mat-list-item *ngFor="let cepage of bouteille.cepages" (click)="cepageFiltre(cepage)" [disabled]="(bs.cepageFilter$.getValue() && bs.cepageFilter$.getValue() == cepage) || bs.accompagnementFilter$.getValue()">
 	  {{ cepage }}
-</button>
+	</button>
       </mat-action-list>
     </td>
   </ng-container>
@@ -100,7 +116,7 @@
     <th mat-header-cell *matHeaderCellDef>
       <button mat-button (click)="accompagnementFiltre(null)" [disabled]="!bs.accompagnementFilter$.getValue() || bs.cepageFilter$.getValue()">
 	Accompagnements
-	</button>
+      </button>
     </th>
     <td mat-cell *matCellDef="let bouteille">
       <mat-action-list>
@@ -108,7 +124,7 @@
 	  {{ accompagnement }}
 	</button>
       </mat-action-list>
-      </td>
+    </td>
   </ng-container>
   <ng-container matColumnDef="source">
     <th mat-header-cell *matHeaderCellDef>
@@ -116,7 +132,7 @@
     </th>
     <td mat-cell *matCellDef="let bouteille">
       {{ bouteille.source }}
-      </td>
+    </td>
   </ng-container>
   <ng-container matColumnDef="commentaire">
     <th mat-header-cell *matHeaderCellDef>
@@ -125,25 +141,25 @@
     <td mat-cell *matCellDef="let bouteille">
       {{ bouteille.commentaire }}
     </td>
-    </ng-container>
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>
-	Actions
-      </th>
-      <td mat-cell *matCellDef="let bouteille">
-	<mat-action-list>
-	  <button mat-list-item (click)="goForUpdate(bouteille.id)">
-	    Modifier
-	  </button>
-	  <button mat-list-item (click)="toggleDegust(bouteille)">
-	    {{ getDegustationState(bouteille) }}
-	  </button>
-	  <button mat-list-item (click)="delete(bouteille)">
-	    Suprimer
-	  </button>
-	</mat-action-list>
-      </td>
-    </ng-container>
+  </ng-container>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>
+      Actions
+    </th>
+    <td mat-cell *matCellDef="let bouteille">
+      <mat-action-list>
+	<button mat-list-item (click)="goForUpdate(bouteille.id)">
+	  Modifier
+	</button>
+	<button mat-list-item (click)="toggleDegust(bouteille)">
+	  {{ getDegustationState(bouteille) }}
+	</button>
+	<button mat-list-item (click)="delete(bouteille)">
+	  Suprimer
+	</button>
+      </mat-action-list>
+    </td>
+  </ng-container>
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let rowData; columns: columnsToDisplay"></tr>>
 </table>

@@ -23,6 +23,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
@@ -78,7 +79,8 @@ const appRoutes: Routes = [
         MatListModule,
         MatDialogModule,
         FormsModule,
-        A11yModule
+        A11yModule,
+        MatRadioModule
 
     ],
     entryComponents: [

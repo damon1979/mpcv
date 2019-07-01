@@ -108,10 +108,21 @@ export class ListComponent implements OnInit, OnDestroy {
     typeFiltre(input) {
         this.bs.typeFilter$.next(input);
     }
-    degustationFiltre(input: boolean) {
-        this.bs.degustationFilter$.next(input);
+    degustationFiltre(input) {
+        if (input == 'En dégustation') {
+            this.bs.degustationFilter$.next(true);
+        }
+        else if (input == 'En cave') {
+            this.bs.degustationFilter$.next(false);
+        }
     }
     domaineFiltre(input: string) {
         this.bs.domaineFilter$.next(input);
+    }
+    dateFiltre(input: number) {
+        this.bs.dateFilter$.next(input);
+    }
+    millesimeFiltre(input: number) {
+        this.bs.millesimeFilter$.next(input);
     }
 }

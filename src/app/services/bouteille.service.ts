@@ -10,6 +10,8 @@ import { UserService } from './user.service';
 })
 export class BouteilleService {
     mettreAJour: BehaviorSubject<Bouteille | null>;
+    dateFilter$: BehaviorSubject<number | null>;
+    millesimeFilter$: BehaviorSubject<number>;
     bouteilleCollection: AngularFirestoreCollection<Bouteille>;
     bouteilles$: Observable<Bouteille[]>;
     appellationFilter$: BehaviorSubject<string | null>;
@@ -24,6 +26,8 @@ export class BouteilleService {
 
     constructor(private us: UserService, private afs: AngularFirestore) {
         this.mettreAJour = new BehaviorSubject(null);
+        this.dateFilter$ = new BehaviorSubject(null);
+        this.millesimeFilter$ = new BehaviorSubject(null);
         this.bouteilleCollection = this.afs.collection<Bouteille>('bouteilles');
 
         this.appellationFilter$ = new BehaviorSubject(null);
@@ -44,7 +48,9 @@ export class BouteilleService {
                     this.couleurFilter$,
                     this.typeFilter$,
                     this.degustationFilter$,
-                    this.domaineFilter$
+                    this.domaineFilter$,
+                    this.dateFilter$,
+                    this.millesimeFilter$
                 ).pipe(
                     switchMap((
                         [
@@ -54,7 +60,9 @@ export class BouteilleService {
                             couleur,
                             type,
                             degustation,
-                            domaine
+                            domaine,
+                            date,
+                            millesime
                         ]
                     ) =>
                         afs.collection<Bouteille>('bouteilles', (ref) => {
@@ -78,6 +86,12 @@ export class BouteilleService {
                             query = query.where('degustation', '==', degustation);
                             if (domaine) {
                                 query = query.where('domaine', '==', domaine);
+                            }
+                            if (date) {
+                                query = query.where('dateConso', '==', date);
+                            }
+                            if (millesime) {
+                                query = query.where('millesime', '==', millesime);
                             }
                             return query;
                         }
