@@ -144,4 +144,17 @@ export class BouteilleService {
 
         return this.initBouteilleDoc(id).delete();
     }
+    reinitFilters() {
+        // méthode chargée de remettre tous les filtres à zéro.
+        this.accompagnementFilter$.next(null);
+        this.appellationFilter$.next(null);
+        this.cepageFilter$.next(null);
+        this.couleurFilter$.next(null);
+        this.dateFilter$.next(null);
+        this.domaineFilter$.next(null);
+        this.degustationFilter$.next(false);
+        this.millesimeFilter$.next(null);
+        this.typeFilter$.next(null);
+
+    }
 }

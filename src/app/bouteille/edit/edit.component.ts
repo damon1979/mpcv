@@ -24,6 +24,7 @@ export class EditComponent implements OnInit, OnDestroy {
     constructor(private fb: FormBuilder, private router: Router, private bs: BouteilleService, private route: ActivatedRoute) { }
 
     ngOnInit() {
+        this.bs.reinitFilters();
         this.ready = false;
         this.bouteille = {};
         if (this.route.snapshot.params['id']) {
